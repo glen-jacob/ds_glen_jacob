@@ -13,18 +13,6 @@ The notebook includes:
 
 ---
 
-## 📁 Project Structure
-ds_glen_jacaob/
-│
-├── notebook_1.ipynb # Main analysis notebook
-├── historical_data.csv # Trading dataset
-├── fear_greed_index.csv # Market sentiment dataset
-├── outputs
-└── README.md
-
-
----
-
 ## 📊 Datasets Used
 
 ### 1. Trading Data (`historical_data.csv`)
