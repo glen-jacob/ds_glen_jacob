@@ -1,152 +1,117 @@
-# ds_glen_jacob
+# Market Sentiment vs Trader Behavior — Analysis 
 
-Market Sentiment vs Trader Behavior — Analysis 
-📌 Overview
+## 📌 Overview
+This project analyzes how trader behavior (PnL, volume, win-rate, trade size, and relative leverage-like metrics) changes across different market sentiment conditions using the Fear & Greed Index.
 
-This project analyzes how trader behavior (PnL, volume, win-rate, trade size, leverage-like metrics) changes across different market sentiment conditions.
-The analysis uses a combination of trade-level data and daily Fear & Greed Index sentiment values to understand patterns, risk behavior, and performance.
+The notebook includes:
+- Data cleaning  
+- Feature engineering  
+- Daily aggregation  
+- Sentiment merging  
+- Statistical testing  
+- Visualization and insights  
 
-The notebook performs:
+---
 
-Data cleaning
+## 📁 Project Structure
+ds_glen_jacaob/
+│
+├── notebook_1.ipynb # Main analysis notebook
+├── historical_data.csv # Trading dataset
+├── fear_greed_index.csv # Market sentiment dataset
+├── outputs
+└── README.md
 
-Feature engineering
 
-Daily aggregation
+---
 
-Sentiment merging
+## 📊 Datasets Used
 
-Statistical testing
-
-Visualization
-
-📊 Datasets Used
-1. Trading Data (historical_data.csv)
-
-Contains:
-
-Timestamp IST
-
-Start Position
-
-Execution Price
-
-Size USD
-
-Closed PnL
-
-Coin
-
-Trade direction (optional)
-
-2. Sentiment Data (fear_greed_index.csv)
-
-Contains:
-
-Date
-
-Value (0–100 score)
-
-Sentiment classification (Fear, Greed, Extreme Fear, etc.)
-
-🔧 Key Steps in the Notebook
-✅ 1. Data Cleaning
-
-Safe datetime parsing
-
-Handling missing/invalid values
-
-Converting numerical columns
-
-Aligning daily formats
-
-✅ 2. Feature Engineering
-
-Position value
-
-Relative trade size (proxy for leverage)
-
-Win/loss flag
-
-Daily aggregates such as:
-
-total daily PnL
-
-win rate
-
-daily volume
-
-average relative size
-
-✅ 3. Merging With Sentiment
-
-Based on daily date
-
-Ensures both datasets have consistent date format
-
-✅ 4. Statistical Testing
-
-Used Mann–Whitney U test (non-parametric and more robust than t-test):
-
-Comparison between Fear vs Greed groups
-
-Checks whether PnL distributions differ significantly
-
-✅ 5. Visualization
-
+### 1. Trading Data (`historical_data.csv`)
 Includes:
+- Timestamp IST
+- Start Position
+- Execution Price
+- Size USD
+- Closed PnL
+- Coin / Symbol
 
-PnL distribution by sentiment
+### 2. Sentiment Data (`fear_greed_index.csv`)
+Includes:
+- Date  
+- Sentiment score (0–100)  
+- Sentiment classification (Fear, Neutral, Greed, etc.)
 
-Volume heatmap (sentiment × date)
+---
 
-Win rate comparison
+## 🔧 Key Steps in the Notebook
 
-Relative trade size distribution
+### ✅ Data Cleaning
+- Safe datetime parsing  
+- Handling missing and invalid records  
+- Standardizing numeric types  
 
-Cumulative PnL trend
+### ✅ Feature Engineering
+- Position value in USD  
+- Relative trade size (proxy for leverage)  
+- Daily aggregated metrics:
+  - Total daily PnL  
+  - Win rate  
+  - Daily volume  
+  - Relative size  
 
-Histogram of relative trade sizes
+### ✅ Merging With Sentiment
+- Merged on the `date` column  
+- Ensures consistent format on both datasets  
 
-(Optional) log-scale variations
+### ✅ Statistical Testing
+Used **Mann–Whitney U test**, because PnL distributions are non-normal.
 
-Outlier-trimmed plots
+### ✅ Visualizations
+- Daily PnL distributions  
+- Volume heatmap (Sentiment × Date)  
+- Win-rate comparison  
+- Relative trade size (before and after outlier removal)  
+- Cumulative PnL over time  
+- Histogram of relative trade size  
 
-✅ Results Summary (High-Level Insights)
-✔️ 1. PnL vs Sentiment
+---
 
-PnL distributions vary across sentiment categories
+## ✅ Results Summary (Insights)
 
-Not statistically significant difference between Fear and Greed in many cases
+### ✔️ PnL Trends
+- PnL distributions vary but not significantly across sentiments  
+- Fear/Greed groups show no strong statistical difference  
 
-Market sentiment may not strongly impact trader performance
+### ✔️ Trade Sizing Behavior
+- Most trades cluster near relative size = 0  
+- A few extreme outliers caused by very small position values  
+- After filtering outliers, sentiment differences become clearer  
 
-✔️ 2. Trade Size Behavior
+### ✔️ Win Rate
+- Win rate stays mostly stable  
+- Slight variation in Fear and Greed conditions  
 
-Most trades are sized consistently
+### ✔️ Activity Levels
+- Fear and Greed days show more trading volume  
+- Indicates emotional or high-volatility periods attract more activity  
 
-Extreme values exist due to small position sizes (ratio explodes)
+---
 
-After removing outliers, sentiment differences are minimal
+## How to Run the Project
 
-✔️ 3. Win Rate Patterns
+### Google Colab
+1. Upload the notebook:  
+   `ds_assignment.ipynb`
+2. Upload both datasets:
+   - `historical_data.csv`
+   - `fear_greed_index.csv`
+3. Run all cells:  
+   **Runtime → Run all**
 
-Win rate slightly varies by sentiment
+### Local Jupyter Notebook
+Install dependencies:
 
-Greed and Neutral often show small improvements
+```bash
+pip install pandas numpy matplotlib seaborn scipy
 
-Fear-related categories show wider variance
-
-✔️ 4. Volume and Activity
-
-More trading activity happens during Fear and Greed days
-
-Suggests emotional market days trigger more participation
-
-✔️ 5. Overall Trend
-
-The trader is reasonably consistent
-
-Sentiment affects volume more than profitability
-
-Risk-taking increases only slightly in Fear or Greed
